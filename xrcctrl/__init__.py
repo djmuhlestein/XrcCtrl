@@ -6,9 +6,18 @@ class XrcControl:
         self.Bind( wx.EVT_WINDOW_CREATE , self.OnCreate)
     def OnCreate(self,evt):
         self.Unbind ( wx.EVT_WINDOW_CREATE )
-        wx.CallAfter(self._PostInit)
+        wx.CallAfter(self._DoPostInit)
         evt.Skip()
         return True
+    def _DoPostInit(self):
+        self._init_auto_ids()
+        self._PostInit()
+    def _init_auto_ids(self):
+        if hasattr( self, 'auto_ids'):
+            for aid in self.auto_ids: 
+                if not aid.startswith('ID_'):
+                    raise RuntimeError ( "auto_ids must all be in format ID_XXX: " % aid )
+                exec ( 'self._%s=xrc.XRCCTRL(self,"%s")' % ( aid.lower()[3:], aid ) )
     def _PostInit(self):
         raise RuntimeError ( "Extend this method." )
  
