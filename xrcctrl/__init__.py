@@ -3,9 +3,10 @@ from wx import xrc
 
 class XrcControl:
     def __init__(self):
-        self.Bind( wx.EVT_WINDOW_CREATE , self.OnCreate)
+        self.Bind( wx.EVT_SIZE, self.OnCreate)
+        self.SendSizeEvent()
     def OnCreate(self,evt):
-        self.Unbind ( wx.EVT_WINDOW_CREATE )
+        self.Unbind ( wx.EVT_SIZE)
         wx.CallAfter(self._DoPostInit)
         evt.Skip()
         return True
@@ -39,6 +40,11 @@ class XrcListCtrl(wx.ListCtrl,XrcControl):
         self.PostCreate(l)
         XrcControl.__init__(self)
 
+class XrcListBox(wx.ListBox, XrcControl):
+    def __init__(self):
+        l=wx.PreListBox()
+        self.PostCreate(l)
+        XrcControl.__init__(self)
 
 class XrcDialog(wx.Dialog,XrcControl):
     def __init__(self):
