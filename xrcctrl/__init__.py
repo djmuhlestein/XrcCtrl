@@ -46,6 +46,12 @@ class XrcListBox(wx.ListBox, XrcControl):
         self.PostCreate(l)
         XrcControl.__init__(self)
 
+class XrcChoice(wx.Choice, XrcControl):
+    def __init__(self):
+        c=wx.PreChoice()
+        self.PostCreate(c)
+        XrcControl.__init__(self)
+
 class XrcDialog(wx.Dialog,XrcControl):
     def __init__(self):
         d=wx.PreDialog()
