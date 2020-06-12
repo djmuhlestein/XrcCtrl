@@ -3,13 +3,8 @@ from wx import xrc
 
 class XrcControl:
     def __init__(self):
-        self.Bind( wx.EVT_SIZE, self.OnCreate)
-        self.SendSizeEvent()
-    def OnCreate(self,evt):
-        self.Unbind ( wx.EVT_SIZE)
         wx.CallAfter(self._DoPostInit)
-        evt.Skip()
-        return True
+
     def _DoPostInit(self):
         self._init_auto_ids()
         self._PostInit()
@@ -24,37 +19,31 @@ class XrcControl:
  
 class XrcFrame(wx.Frame, XrcControl):
     def __init__(self):
-        f=wx.PreFrame()
-        self.PostCreate(f)
+        wx.Frame.__init__(self)
         XrcControl.__init__(self)
 
 class XrcPanel(wx.Panel,XrcControl):
     def __init__(self):
-        p=wx.PrePanel()
-        self.PostCreate(p)
+        wx.Panel.__init__(self)
         XrcControl.__init__(self)
 
 class XrcListCtrl(wx.ListCtrl,XrcControl):
     def __init__(self):
-        l=wx.PreListCtrl()
-        self.PostCreate(l)
+        wx.ListCtrl.__init__(self)
         XrcControl.__init__(self)
 
 class XrcListBox(wx.ListBox, XrcControl):
     def __init__(self):
-        l=wx.PreListBox()
-        self.PostCreate(l)
+        wx.ListBox.__init__(self)
         XrcControl.__init__(self)
 
 class XrcChoice(wx.Choice, XrcControl):
     def __init__(self):
-        c=wx.PreChoice()
-        self.PostCreate(c)
+        wx.Choice.__init__(self)
         XrcControl.__init__(self)
 
 class XrcDialog(wx.Dialog,XrcControl):
     def __init__(self):
-        d=wx.PreDialog()
-        self.PostCreate(d)
+        wx.Dialog.__init__(self)
         XrcControl.__init__(self)
 
